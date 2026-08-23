@@ -936,5 +936,38 @@ a{
 
 </div>
 
+
+<script>
+(() => {
+  const APP_URL = "https://donprakur.github.io/moya-podrabotka/app/";
+  let deferredPrompt = null;
+
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
+  });
+
+  async function installPWA(event) {
+    if (event) event.preventDefault();
+
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+
+      if (choice && choice.outcome === "accepted") return;
+      return;
+    }
+
+    // If Chrome has not exposed an install prompt yet, open the real PWA.
+    window.location.href = APP_URL;
+  }
+
+  document.querySelectorAll('a[href="' + APP_URL + '"]').forEach(link => {
+    link.addEventListener("click", installPWA);
+  });
+})();
+</script>
+
 </body>
 </html>
