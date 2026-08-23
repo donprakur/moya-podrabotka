@@ -2263,5 +2263,44 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+
+<style>
+#pwa-install-btn{
+  display:none; position:fixed; left:18px; right:18px; bottom:18px; z-index:9999;
+  min-height:54px; border:0; border-radius:16px; color:#fff;
+  background:linear-gradient(135deg,#6846ff,#8064ff);
+  font:800 15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  box-shadow:0 12px 30px rgba(104,70,255,.28);
+}
+</style>
+<button id="pwa-install-btn">Установить приложение</button>
+<script>
+(() => {
+  let deferredPrompt = null;
+  const btn = document.getElementById("pwa-install-btn");
+  const standalone = window.matchMedia("(display-mode: standalone)").matches ||
+                     window.navigator.standalone === true;
+
+  window.addEventListener("beforeinstallprompt", e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (!standalone) btn.style.display = "block";
+  });
+
+  btn.addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    btn.style.display = "none";
+  });
+
+  window.addEventListener("appinstalled", () => {
+    btn.style.display = "none";
+    deferredPrompt = null;
+  });
+})();
+</script>
+
 </body>
 </html>
