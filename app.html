@@ -760,6 +760,58 @@ html,body{margin:0;padding:0;background:#f7f7fb;}
 </style>
 
 
+
+<section id="install-success" style="
+  display:none;
+  min-height:100vh;
+  padding:28px 20px;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:linear-gradient(180deg,#ffffff 0%,#f7f5ff 100%);
+  font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Roboto,Arial,sans-serif;
+">
+  <div style="width:100%;max-width:360px;">
+    <div style="
+      width:82px;height:82px;margin:0 auto 22px;
+      border-radius:26px;
+      display:flex;align-items:center;justify-content:center;
+      background:#e9fbf3;color:#20b978;
+      font-size:42px;font-weight:800;
+    ">✓</div>
+
+    <h1 style="
+      margin:0 0 12px;
+      font-size:30px;
+      line-height:1.1;
+      letter-spacing:-1px;
+      color:#17172a;
+    ">Приложение установлено!</h1>
+
+    <p style="
+      margin:0 auto 25px;
+      max-width:300px;
+      color:#77778b;
+      font-size:15px;
+      line-height:1.5;
+    ">
+      Перейдите на главный экран телефона и откройте «Моя подработка».
+    </p>
+
+    <div style="
+      padding:15px 16px;
+      border-radius:17px;
+      background:#f1eeff;
+      color:#6846ff;
+      font-size:13px;
+      line-height:1.45;
+      font-weight:700;
+    ">
+      📱 Найдите иконку приложения на главном экране
+    </div>
+  </div>
+</section>
+
 <div id="job-app">
 
 
@@ -2262,5 +2314,23 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+
+<script>
+(function(){
+  window.showInstallSuccessScreen = function(){
+    var app = document.getElementById('job-app');
+    var success = document.getElementById('install-success');
+    if(!success) return;
+    if(app) app.style.display = 'none';
+    success.style.display = 'flex';
+  };
+
+  if (localStorage.getItem('moya_podrabotka_install_success') === '1') {
+    localStorage.removeItem('moya_podrabotka_install_success');
+    window.showInstallSuccessScreen();
+  }
+})();
+</script>
+
 </body>
 </html>
