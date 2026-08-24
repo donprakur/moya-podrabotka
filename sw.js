@@ -1,4 +1,4 @@
-const CACHE_NAME = "moya-podrabotka-root-v1";
+const CACHE_NAME = "moya-podrabotka-app-v2";
 
 self.addEventListener("install", event => {
   event.waitUntil(self.skipWaiting());
