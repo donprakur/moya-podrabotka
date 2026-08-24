@@ -3,7 +3,6 @@
   "short_name": "Подработка",
   "description": "Приложение для поиска подработки и вакансий.",
   "lang": "ru-RU",
-  "dir": "ltr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
