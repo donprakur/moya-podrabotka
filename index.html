@@ -571,6 +571,18 @@ a{
   .features{grid-template-columns:1fr}
 }
 </style>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon-192.png" type="image/png">
+<meta name="theme-color" content="#6846ff">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js", {scope:"./"}).catch(console.error);
+  });
+}
+</script>
 </head>
 
 <body>
