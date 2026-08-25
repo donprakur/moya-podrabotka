@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6846ff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon-192.png" type="image/png">
+  <title>Моя подработка</title>
+
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:#fff}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,Arial,sans-serif;
+      color:#17172a;
+    }
+    .screen{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 20px;
+      text-align:center;
+      background:radial-gradient(circle at 50% 20%,#f0ecff 0,#fff 48%);
+    }
+    .wrap{width:100%;max-width:360px}
+    .icon{
+      width:84px;height:84px;margin:0 auto 22px;border-radius:26px;
+      background:linear-gradient(135deg,#6846ff,#8064ff);
+      color:#fff;font-size:42px;font-weight:900;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 16px 35px rgba(104,70,255,.22);
+    }
+    h1{
+      margin:0 0 12px;
+      font-size:28px;line-height:1.1;letter-spacing:-1px;
+    }
+    p{
+      margin:0 auto 22px;
+      max-width:320px;
+      color:#77778b;
+      font-size:15px;
+      line-height:1.5;
+    }
+    button{
+      width:100%;
+      min-height:55px;
+      border:0;
+      border-radius:16px;
+      background:linear-gradient(135deg,#6846ff,#8064ff);
+      color:#fff;
+      font-size:16px;
+      font-weight:800;
+      box-shadow:0 13px 28px rgba(104,70,255,.22);
+    }
+    .hint{
+      margin-top:12px;
+      color:#9999a8;
+      font-size:11px;
+      line-height:1.4;
+    }
+    #installed{display:none}
+  </style>
+</head>
+
+<body>
+  <div class="screen">
+    <div class="wrap">
+
+      <div class="icon">✓</div>
+
+      <div id="install">
+        <h1>Установка приложения</h1>
+        <p>Нажмите кнопку ниже, чтобы установить «Моя подработка» на телефон.</p>
+        <button id="installBtn">Установить приложение</button>
+        <div class="hint">После установки приложение появится на главном экране.</div>
+      </div>
+
+      <div id="installed">
+        <h1>Приложение установлено!</h1>
+        <p>Перейдите на главный экран телефона и откройте «Моя подработка».</p>
+        <div class="hint">📱 Найдите иконку приложения на главном экране.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let deferredPrompt = null;
+    const installBox = document.getElementById("install");
+    const installedBox = document.getElementById("installed");
+    const btn = document.getElementById("installBtn");
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js", {scope:"./"}).catch(console.error);
+      });
+    }
+
+    window.addEventListener("beforeinstallprompt", (event) => {
+      event.preventDefault();
+      deferredPrompt = event;
+
+      // Try to show the native installer as soon as Chrome exposes it.
+      setTimeout(() => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+        }
+      }, 150);
+    });
+
+    btn.addEventListener("click", async () => {
+      if (!deferredPrompt) return;
+
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    });
+
+    window.addEventListener("appinstalled", () => {
+      installBox.style.display = "none";
+      installedBox.style.display = "block";
+    });
+
+    // If already running as an installed app, don't show the install page.
+    const standalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone === true;
+
+    if (standalone) {
+      installBox.style.display = "none";
+      installedBox.style.display = "block";
+    }
+  </script>
+</body>
+</html>
