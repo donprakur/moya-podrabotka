@@ -1,985 +1,139 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#6846ff">
-<title>Моя подработка</title>
-
-<style>
-:root{
-  --accent:#6846ff;
-  --accent2:#8064ff;
-  --soft:#f1eeff;
-  --text:#17172a;
-  --muted:#77778b;
-  --border:#ececf3;
-  --green:#20b978;
-}
-
-*{box-sizing:border-box}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  margin:0;
-  background:#f7f7fb;
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,Arial,sans-serif;
-}
-
-button,a{
-  font:inherit;
-}
-
-a{
-  text-decoration:none;
-}
-
-.page{
-  width:100%;
-  max-width:430px;
-  min-height:100vh;
-  margin:0 auto;
-  background:#fff;
-  overflow:hidden;
-}
-
-.container{
-  padding:0 18px;
-}
-
-/* HEADER */
-
-.header{
-  position:sticky;
-  top:0;
-  z-index:50;
-  height:64px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 18px;
-  background:rgba(255,255,255,.92);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(236,236,243,.8);
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  font-size:17px;
-  font-weight:800;
-}
-
-.logo{
-  width:36px;
-  height:36px;
-  border-radius:12px;
-  display:grid;
-  place-items:center;
-  color:#fff;
-  font-weight:900;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  box-shadow:0 8px 20px rgba(104,70,255,.2);
-}
-
-.header-btn{
-  border:0;
-  border-radius:12px;
-  padding:10px 12px;
-  color:#fff;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  font-size:12px;
-  font-weight:800;
-}
-
-/* HERO */
-
-.hero{
-  padding:30px 18px 34px;
-  text-align:center;
-  background:
-    radial-gradient(circle at 50% 10%,#eeeaff 0,#fff 48%);
-}
-
-.eyebrow{
-  display:inline-flex;
-  align-items:center;
-  padding:7px 11px;
-  border-radius:999px;
-  background:var(--soft);
-  color:var(--accent);
-  font-size:11px;
-  font-weight:800;
-  margin-bottom:16px;
-}
-
-.hero h1{
-  margin:0;
-  font-size:39px;
-  line-height:1.02;
-  letter-spacing:-1.9px;
-  font-weight:850;
-}
-
-.hero h1 span{
-  color:var(--accent);
-}
-
-.hero-text{
-  margin:15px auto 20px;
-  color:var(--muted);
-  font-size:15px;
-  line-height:1.48;
-  max-width:370px;
-}
-
-.main-btn{
-  width:100%;
-  min-height:57px;
-  border:0;
-  border-radius:17px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  font-size:16px;
-  font-weight:800;
-  box-shadow:0 13px 28px rgba(104,70,255,.22);
-}
-
-.btn-note{
-  margin-top:9px;
-  color:#9292a2;
-  font-size:11px;
-}
-
-/* PHONE */
-
-.phone-stage{
-  position:relative;
-  height:410px;
-  margin:28px -18px 0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.phone{
-  position:relative;
-  width:220px;
-  height:390px;
-  padding:14px;
-  border:7px solid #171725;
-  border-radius:34px;
-  background:#fff;
-  box-shadow:0 25px 55px rgba(30,20,80,.19);
-  transform:rotate(-3deg);
-}
-
-.notch{
-  position:absolute;
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:84px;
-  height:19px;
-  background:#171725;
-  border-radius:0 0 12px 12px;
-}
-
-.phone-top{
-  margin-top:17px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.phone-title{
-  font-size:15px;
-  font-weight:800;
-}
-
-.phone-count{
-  color:var(--muted);
-  font-size:9px;
-}
-
-.phone-card{
-  margin-top:10px;
-  padding:11px;
-  border:1px solid var(--border);
-  border-radius:15px;
-  text-align:left;
-  box-shadow:0 4px 14px rgba(30,20,70,.04);
-}
-
-.phone-card-title{
-  font-size:10px;
-  line-height:1.25;
-  font-weight:800;
-}
-
-.salary{
-  margin-top:4px;
-  color:var(--accent);
-  font-size:11px;
-  font-weight:800;
-}
-
-.meta{
-  margin-top:4px;
-  color:var(--muted);
-  font-size:8px;
-}
-
-.tag{
-  display:inline-block;
-  margin-top:7px;
-  padding:4px 6px;
-  border-radius:7px;
-  background:#f6f5f9;
-  color:#676679;
-  font-size:7px;
-}
-
-.floating{
-  position:absolute;
-  right:28px;
-  bottom:54px;
-  padding:11px 13px;
-  border:1px solid var(--border);
-  border-radius:15px;
-  background:#fff;
-  box-shadow:0 12px 30px rgba(30,20,80,.12);
-  text-align:left;
-  font-size:10px;
-  font-weight:800;
-}
-
-.floating span{
-  display:block;
-  margin-top:3px;
-  color:var(--green);
-  font-size:9px;
-}
-
-/* SECTIONS */
-
-.section{
-  padding:48px 18px;
-}
-
-.section.soft{
-  background:#faf9fd;
-}
-
-.kicker{
-  color:var(--accent);
-  font-size:11px;
-  font-weight:850;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-}
-
-.section h2{
-  margin:8px 0 10px;
-  font-size:29px;
-  line-height:1.07;
-  letter-spacing:-1.2px;
-  font-weight:850;
-}
-
-.section-desc{
-  margin:0 0 23px;
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.5;
-}
-
-/* JOBS */
-
-.jobs{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.job{
-  padding:15px;
-  border:1px solid var(--border);
-  border-radius:19px;
-  background:#fff;
-  box-shadow:0 5px 18px rgba(30,20,70,.04);
-}
-
-.job-top{
-  display:flex;
-  gap:11px;
-}
-
-.job-icon{
-  width:43px;
-  height:43px;
-  flex:0 0 43px;
-  display:grid;
-  place-items:center;
-  border-radius:13px;
-  background:var(--soft);
-  color:var(--accent);
-  font-size:19px;
-}
-
-.job-main{
-  min-width:0;
-}
-
-.job-title{
-  font-size:14px;
-  line-height:1.25;
-  font-weight:800;
-}
-
-.job-salary{
-  margin-top:4px;
-  color:var(--accent);
-  font-size:15px;
-  font-weight:850;
-}
-
-.job-meta{
-  margin-top:4px;
-  color:var(--muted);
-  font-size:10px;
-}
-
-.tags{
-  display:flex;
-  gap:5px;
-  flex-wrap:wrap;
-  margin-top:10px;
-}
-
-.tags span{
-  padding:5px 7px;
-  border-radius:8px;
-  background:#f6f5f9;
-  color:#676679;
-  font-size:9px;
-}
-
-.jobs-btn{
-  margin-top:17px;
-}
-
-/* FEATURES */
-
-.features{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.feature{
-  min-height:150px;
-  padding:17px;
-  border:1px solid var(--border);
-  border-radius:19px;
-  background:#fff;
-}
-
-.feature-icon{
-  font-size:23px;
-  margin-bottom:12px;
-}
-
-.feature h3{
-  margin:0 0 7px;
-  font-size:14px;
-}
-
-.feature p{
-  margin:0;
-  color:var(--muted);
-  font-size:11px;
-  line-height:1.45;
-}
-
-/* APP PREVIEW */
-
-.app-preview{
-  text-align:center;
-}
-
-.preview-phone{
-  width:210px;
-  height:365px;
-  margin:0 auto 27px;
-  padding:14px;
-  border:7px solid #171725;
-  border-radius:32px;
-  background:#fff;
-  box-shadow:0 22px 50px rgba(30,20,80,.16);
-}
-
-.preview-head{
-  margin-top:8px;
-  font-size:16px;
-  font-weight:800;
-}
-
-.preview-box{
-  margin-top:15px;
-  padding:15px;
-  border-radius:17px;
-  background:var(--soft);
-  text-align:left;
-}
-
-.preview-box strong{
-  font-size:12px;
-}
-
-.preview-box p{
-  margin:7px 0 0;
-  color:var(--muted);
-  font-size:9px;
-  line-height:1.45;
-}
-
-/* STEPS */
-
-.steps{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.step{
-  display:flex;
-  gap:13px;
-  padding:16px;
-  border:1px solid var(--border);
-  border-radius:18px;
-  background:#fff;
-}
-
-.step-num{
-  width:38px;
-  height:38px;
-  flex:0 0 38px;
-  display:grid;
-  place-items:center;
-  border-radius:12px;
-  background:var(--soft);
-  color:var(--accent);
-  font-size:12px;
-  font-weight:900;
-}
-
-.step h3{
-  margin:1px 0 5px;
-  font-size:14px;
-}
-
-.step p{
-  margin:0;
-  color:var(--muted);
-  font-size:11px;
-  line-height:1.4;
-}
-
-/* CTA */
-
-.final-cta{
-  padding:55px 18px 105px;
-  text-align:center;
-  color:#fff;
-  background:linear-gradient(135deg,#5d3df0,#8064ff);
-}
-
-.final-cta h2{
-  margin:0 0 11px;
-  font-size:31px;
-  line-height:1.06;
-  letter-spacing:-1.3px;
-}
-
-.final-cta p{
-  margin:0 auto 22px;
-  max-width:350px;
-  color:rgba(255,255,255,.82);
-  font-size:13px;
-  line-height:1.5;
-}
-
-.final-btn{
-  width:100%;
-  min-height:57px;
-  border-radius:17px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#fff;
-  color:var(--accent);
-  font-size:16px;
-  font-weight:850;
-}
-
-/* STICKY CTA */
-
-.sticky-download{
-  position:fixed;
-  left:50%;
-  bottom:10px;
-  transform:translateX(-50%);
-  z-index:100;
-  width:min(394px,calc(100% - 24px));
-  min-height:54px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:16px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#fff;
-  box-shadow:0 13px 30px rgba(104,70,255,.32);
-  font-size:15px;
-  font-weight:850;
-}
-
-/* FOOTER */
-
-.footer{
-  padding:23px 18px 85px;
-  color:#9292a2;
-  background:#fff;
-  text-align:center;
-  font-size:10px;
-}
-
-/* SMALL PHONES */
-
-@media(max-width:350px){
-  .hero h1{font-size:34px}
-  .phone{width:205px}
-  .floating{right:13px}
-  .features{grid-template-columns:1fr}
-}
-</style>
-<link rel="manifest" href="./manifest.json">
-<link rel="icon" href="./icon-192.png" type="image/png">
-<meta name="theme-color" content="#6846ff">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
-    navigator.serviceWorker.register("./sw.js", {scope:"./"}).catch(console.error);
-  });
-}
-</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6846ff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon-192.png" type="image/png">
+  <title>Моя подработка</title>
+
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:#fff}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,Arial,sans-serif;
+      color:#17172a;
+    }
+    .screen{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 20px;
+      text-align:center;
+      background:radial-gradient(circle at 50% 20%,#f0ecff 0,#fff 48%);
+    }
+    .wrap{width:100%;max-width:360px}
+    .icon{
+      width:84px;height:84px;margin:0 auto 22px;border-radius:26px;
+      background:linear-gradient(135deg,#6846ff,#8064ff);
+      color:#fff;font-size:42px;font-weight:900;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 16px 35px rgba(104,70,255,.22);
+    }
+    h1{
+      margin:0 0 12px;
+      font-size:28px;line-height:1.1;letter-spacing:-1px;
+    }
+    p{
+      margin:0 auto 22px;
+      max-width:320px;
+      color:#77778b;
+      font-size:15px;
+      line-height:1.5;
+    }
+    button{
+      width:100%;
+      min-height:55px;
+      border:0;
+      border-radius:16px;
+      background:linear-gradient(135deg,#6846ff,#8064ff);
+      color:#fff;
+      font-size:16px;
+      font-weight:800;
+      box-shadow:0 13px 28px rgba(104,70,255,.22);
+    }
+    .hint{
+      margin-top:12px;
+      color:#9999a8;
+      font-size:11px;
+      line-height:1.4;
+    }
+    #installed{display:none}
+  </style>
 </head>
 
 <body>
+  <div class="screen">
+    <div class="wrap">
 
-<div class="page">
+      <div class="icon">✓</div>
 
-<header class="header">
-  <div class="brand">
-    <div class="logo">✓</div>
-    <span>Моя подработка</span>
-  </div>
-  <a class="header-btn" href="#download">Скачать</a>
-</header>
-
-<main>
-
-<section class="hero">
-  <div class="eyebrow">📱 Приложение для поиска работы</div>
-
-  <h1>
-    Найди подработку,
-    <span>которая подходит тебе</span>
-  </h1>
-
-  <p class="hero-text">
-    Актуальные вакансии с удобным графиком и возможностью работать удалённо — всё в одном приложении.
-  </p>
-
-  <a class="main-btn" href="#download">
-    Скачать приложение →
-  </a>
-
-  <div class="btn-note">
-    Бесплатно · Быстрая установка
-  </div>
-
-  <div class="phone-stage">
-    <div class="phone">
-      <div class="notch"></div>
-
-      <div class="phone-top">
-        <div class="phone-title">Вакансии</div>
-        <div class="phone-count">10 вакансий</div>
+      <div id="install">
+        <h1>Установка приложения</h1>
+        <p>Нажмите кнопку ниже, чтобы установить «Моя подработка» на телефон.</p>
+        <button id="installBtn">Установить приложение</button>
+        <div class="hint">После установки приложение появится на главном экране.</div>
       </div>
 
-      <div class="phone-card">
-        <div class="phone-card-title">
-          Менеджер по работе с таблицами
-        </div>
-        <div class="salary">70 000 — 90 000 ₽</div>
-        <div class="meta">🏠 Удалённо · Гибкий график</div>
-        <span class="tag">Без опыта</span>
+      <div id="installed">
+        <h1>Приложение установлено!</h1>
+        <p>Перейдите на главный экран телефона и откройте «Моя подработка».</p>
+        <div class="hint">📱 Найдите иконку приложения на главном экране.</div>
       </div>
 
-      <div class="phone-card">
-        <div class="phone-card-title">
-          Помощник бухгалтера
-        </div>
-        <div class="salary">75 000 — 100 000 ₽</div>
-        <div class="meta">🏠 Удалённо · Гибкий график</div>
-        <span class="tag">Без опыта</span>
-      </div>
-
-      <div class="phone-card">
-        <div class="phone-card-title">
-          Копирайтер
-        </div>
-        <div class="salary">70 000 — 90 000 ₽</div>
-        <div class="meta">🏠 Удалённо · Гибкий график</div>
-        <span class="tag">От 1 года</span>
-      </div>
-    </div>
-
-    <div class="floating">
-      10 вакансий
-      <span>доступны в приложении</span>
     </div>
   </div>
-</section>
 
-<section class="section">
-  <div class="kicker">Вакансии</div>
-
-  <h2>Посмотри, какая работа доступна сейчас</h2>
-
-  <p class="section-desc">
-    Примеры предложений, которые можно найти в приложении.
-  </p>
-
-  <div class="jobs">
-
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">▦</div>
-        <div class="job-main">
-          <div class="job-title">Менеджер по работе с таблицами</div>
-          <div class="job-salary">70 000 — 90 000 ₽</div>
-          <div class="job-meta">Удалённо · Без опыта</div>
-        </div>
-      </div>
-      <div class="tags">
-        <span>Удалённо</span>
-        <span>Гибкий график</span>
-      </div>
-    </article>
-
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">₽</div>
-        <div class="job-main">
-          <div class="job-title">Помощник бухгалтера</div>
-          <div class="job-salary">75 000 — 100 000 ₽</div>
-          <div class="job-meta">Удалённо · Без опыта</div>
-        </div>
-      </div>
-      <div class="tags">
-        <span>Удалённо</span>
-        <span>Гибкий график</span>
-      </div>
-    </article>
-
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">✎</div>
-        <div class="job-main">
-          <div class="job-title">Копирайтер</div>
-          <div class="job-salary">70 000 — 90 000 ₽</div>
-          <div class="job-meta">Удалённо · От 1 года</div>
-        </div>
-      </div>
-      <div class="tags">
-        <span>Удалённо</span>
-        <span>Гибкий график</span>
-      </div>
-    </article>
-
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">◫</div>
-        <div class="job-main">
-          <div class="job-title">Помощник аналитика</div>
-          <div class="job-salary">80 000 — 100 000 ₽</div>
-          <div class="job-meta">Удалённо · От 1 года</div>
-        </div>
-      </div>
-      <div class="tags">
-        <span>Удалённо</span>
-        <span>Гибкий график</span>
-      </div>
-    </article>
-
-  </div>
-
-  <div class="jobs-btn">
-    <a class="main-btn" href="#download">
-      Смотреть больше вакансий →
-    </a>
-  </div>
-</section>
-
-<section class="section soft">
-  <div class="kicker">Возможности</div>
-
-  <h2>Всё необходимое для поиска подработки</h2>
-
-  <p class="section-desc">
-    Выбирайте подходящие предложения и откликайтесь прямо с телефона.
-  </p>
-
-  <div class="features">
-
-    <article class="feature">
-      <div class="feature-icon">🔎</div>
-      <h3>Подходящие вакансии</h3>
-      <p>Смотрите доступные предложения и выбирайте подходящий вариант.</p>
-    </article>
-
-    <article class="feature">
-      <div class="feature-icon">🏠</div>
-      <h3>Удалённый формат</h3>
-      <p>Вакансии с возможностью работать из дома.</p>
-    </article>
-
-    <article class="feature">
-      <div class="feature-icon">🕐</div>
-      <h3>Гибкий график</h3>
-      <p>Работа, которую можно подстроить под своё расписание.</p>
-    </article>
-
-    <article class="feature">
-      <div class="feature-icon">📱</div>
-      <h3>Всегда под рукой</h3>
-      <p>Открывайте приложение в любое удобное время.</p>
-    </article>
-
-  </div>
-</section>
-
-<section class="section app-preview">
-
-  <div class="kicker">Приложение</div>
-
-  <h2>Ищите работу прямо с телефона</h2>
-
-  <p class="section-desc">
-    Откройте вакансию, посмотрите условия и выберите удобный способ отклика.
-  </p>
-
-  <div class="preview-phone">
-
-    <div class="preview-head">
-      Вакансия
-    </div>
-
-    <div class="preview-box">
-      <strong>Менеджер по работе с таблицами</strong>
-      <div class="salary">70 000 — 90 000 ₽</div>
-      <p>
-        Удалённый формат<br>
-        Гибкий график<br>
-        Без опыта
-      </p>
-    </div>
-
-    <div class="preview-box">
-      <strong>Что предстоит делать</strong>
-      <p>
-        Работать с таблицами,
-        обрабатывать информацию
-        и подготавливать отчёты.
-      </p>
-    </div>
-
-  </div>
-
-  <a class="main-btn" href="#download">
-    Скачать приложение →
-  </a>
-
-</section>
-
-<section class="section soft">
-
-  <div class="kicker">Как это работает</div>
-
-  <h2>Начать проще, чем кажется</h2>
-
-  <p class="section-desc">
-    Несколько простых шагов — и можно смотреть доступные вакансии.
-  </p>
-
-  <div class="steps">
-
-    <div class="step">
-      <div class="step-num">01</div>
-      <div>
-        <h3>Скачайте приложение</h3>
-        <p>Установите «Моя подработка» на телефон.</p>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">02</div>
-      <div>
-        <h3>Ответьте на несколько вопросов</h3>
-        <p>Это поможет показать подходящие предложения.</p>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">03</div>
-      <div>
-        <h3>Посмотрите вакансии</h3>
-        <p>Изучайте доступные предложения прямо в приложении.</p>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">04</div>
-      <div>
-        <h3>Выберите и откликнитесь</h3>
-        <p>Откройте детали вакансии и продолжите общение.</p>
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section">
-
-  <div class="kicker">Ещё предложения</div>
-
-  <h2>Ваша следующая подработка может быть уже здесь</h2>
-
-  <p class="section-desc">
-    Откройте приложение и посмотрите все доступные вакансии.
-  </p>
-
-  <div class="jobs">
-
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">▤</div>
-        <div class="job-main">
-          <div class="job-title">Специалист по работе с документами</div>
-          <div class="job-salary">70 000 — 85 000 ₽</div>
-          <div class="job-meta">Удалённо · Без опыта</div>
-        </div>
-      </div>
-    </article>
-
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">▣</div>
-        <div class="job-main">
-          <div class="job-title">Контент-менеджер</div>
-          <div class="job-salary">75 000 — 95 000 ₽</div>
-          <div class="job-meta">Удалённо · От 1 года</div>
-        </div>
-      </div>
-    </article>
-
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">⌘</div>
-        <div class="job-main">
-          <div class="job-title">Оператор удалённого офиса</div>
-          <div class="job-salary">70 000 — 90 000 ₽</div>
-          <div class="job-meta">Удалённо · Без опыта</div>
-        </div>
-      </div>
-    </article>
-
-  </div>
-
-</section>
-
-<section class="final-cta" id="download">
-
-  <h2>Готовы найти подходящую подработку?</h2>
-
-  <p>
-    Установите «Моя подработка» и начните смотреть доступные вакансии.
-  </p>
-
-  <!-- ЗАМЕНИТЬ НА URL PWA -->
-  <a class="final-btn" href="https://donprakur.github.io/moya-podrabotka/app/">
-    Скачать приложение →
-  </a>
-
-</section>
-
-</main>
-
-<footer class="footer">
-  © 2026 «Моя подработка»
-</footer>
-
-<a class="sticky-download" href="#download">
-  Скачать приложение
-</a>
-
-</div>
-
-
-<script>
-(() => {
-  const APP_URL = "https://donprakur.github.io/moya-podrabotka/app/";
-  let deferredPrompt = null;
-
-  window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredPrompt = event;
-  });
-
-  async function installPWA(event) {
-    if (event) event.preventDefault();
-
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const choice = await deferredPrompt.userChoice;
-      deferredPrompt = null;
-
-      if (choice && choice.outcome === "accepted") return;
-      return;
+  <script>
+    let deferredPrompt = null;
+    const installBox = document.getElementById("install");
+    const installedBox = document.getElementById("installed");
+    const btn = document.getElementById("installBtn");
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js", {scope:"./"}).catch(console.error);
+      });
     }
 
-    // If Chrome has not exposed an install prompt yet, open the real PWA.
-    window.location.href = APP_URL;
-  }
+    window.addEventListener("beforeinstallprompt", (event) => {
+      event.preventDefault();
+      deferredPrompt = event;
 
-  document.querySelectorAll('a[href="' + APP_URL + '"]').forEach(link => {
-    link.addEventListener("click", installPWA);
-  });
-})();
-</script>
+      // Try to show the native installer as soon as Chrome exposes it.
+      setTimeout(() => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+        }
+      }, 150);
+    });
 
+    btn.addEventListener("click", async () => {
+      if (!deferredPrompt) return;
+
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    });
+
+    window.addEventListener("appinstalled", () => {
+      installBox.style.display = "none";
+      installedBox.style.display = "block";
+    });
+
+    // If already running as an installed app, don't show the install page.
+    const standalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone === true;
+
+    if (standalone) {
+      installBox.style.display = "none";
+      installedBox.style.display = "block";
+    }
+  </script>
 </body>
 </html>
