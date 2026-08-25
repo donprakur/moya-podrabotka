@@ -1,13 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#6846ff">
-<title>Моя подработка</title>
-
+<meta name="description" content="Моя подработка — вакансии и подработка с телефона">
+<link rel="icon" href="./icon-192.png" type="image/png">
 <style>
-:root{
+html,body{margin:0;padding:0;background:#f7f7fb;}
+</style>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon-192.png" type="image/png">
+<meta name="theme-color" content="#6846ff">
+</head>
+<body>
+<style>
+#job-app{
   --accent:#6846ff;
   --accent2:#8064ff;
   --soft:#f1eeff;
@@ -15,969 +23,2312 @@
   --muted:#77778b;
   --border:#ececf3;
   --green:#20b978;
-}
-
-*{box-sizing:border-box}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  margin:0;
-  background:#f7f7fb;
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,Arial,sans-serif;
-}
-
-button,a{
-  font:inherit;
-}
-
-a{
-  text-decoration:none;
-}
-
-.page{
   width:100%;
   max-width:430px;
   min-height:100vh;
   margin:0 auto;
   background:#fff;
-  overflow:hidden;
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,Arial,sans-serif;
+  overflow:hidden
 }
 
-.container{
-  padding:0 18px;
+#job-app *{box-sizing:border-box}
+#job-app button{font:inherit}
+
+.job-screen{
+  display:none;
+  min-height:100vh;
+  padding:18px 18px 28px;
+  animation:jobFade .28s ease
 }
 
-/* HEADER */
-
-.header{
-  position:sticky;
-  top:0;
-  z-index:50;
-  height:64px;
+.job-screen.active{
   display:flex;
+  flex-direction:column
+}
+
+@keyframes jobFade{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+
+/* =========================
+   ЗАГРУЗКА
+========================= */
+
+#job-loading{
   align-items:center;
-  justify-content:space-between;
-  padding:0 18px;
-  background:rgba(255,255,255,.92);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(236,236,243,.8);
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  font-size:17px;
-  font-weight:800;
-}
-
-.logo{
-  width:36px;
-  height:36px;
-  border-radius:12px;
-  display:grid;
-  place-items:center;
-  color:#fff;
-  font-weight:900;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  box-shadow:0 8px 20px rgba(104,70,255,.2);
-}
-
-.header-btn{
-  border:0;
-  border-radius:12px;
-  padding:10px 12px;
-  color:#fff;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  font-size:12px;
-  font-weight:800;
-}
-
-/* HERO */
-
-.hero{
-  padding:30px 18px 34px;
+  justify-content:center;
   text-align:center;
-  background:
-    radial-gradient(circle at 50% 10%,#eeeaff 0,#fff 48%);
+  background:radial-gradient(circle at 50% 40%,#f1edff 0,#fff 43%)
 }
 
-.eyebrow{
-  display:inline-flex;
-  align-items:center;
-  padding:7px 11px;
-  border-radius:999px;
-  background:var(--soft);
-  color:var(--accent);
-  font-size:11px;
-  font-weight:800;
-  margin-bottom:16px;
-}
-
-.hero h1{
-  margin:0;
-  font-size:39px;
-  line-height:1.02;
-  letter-spacing:-1.9px;
-  font-weight:850;
-}
-
-.hero h1 span{
-  color:var(--accent);
-}
-
-.hero-text{
-  margin:15px auto 20px;
-  color:var(--muted);
-  font-size:15px;
-  line-height:1.48;
-  max-width:370px;
-}
-
-.main-btn{
-  width:100%;
-  min-height:57px;
-  border:0;
-  border-radius:17px;
+.job-logo{
+  width:76px;
+  height:76px;
+  border-radius:24px;
+  background:linear-gradient(135deg,var(--accent),#8b72ff);
   display:flex;
   align-items:center;
   justify-content:center;
   color:#fff;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  font-size:16px;
+  font-size:38px;
   font-weight:800;
-  box-shadow:0 13px 28px rgba(104,70,255,.22);
+  box-shadow:0 16px 35px rgba(104,70,255,.25);
+  margin-bottom:18px
 }
 
-.btn-note{
-  margin-top:9px;
-  color:#9292a2;
-  font-size:11px;
+.job-brand{
+  font-size:27px;
+  font-weight:800;
+  letter-spacing:-1px;
+  margin-bottom:28px
 }
 
-/* PHONE */
-
-.phone-stage{
-  position:relative;
-  height:410px;
-  margin:28px -18px 0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.phone{
-  position:relative;
-  width:220px;
-  height:390px;
-  padding:14px;
-  border:7px solid #171725;
-  border-radius:34px;
-  background:#fff;
-  box-shadow:0 25px 55px rgba(30,20,80,.19);
-  transform:rotate(-3deg);
-}
-
-.notch{
-  position:absolute;
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:84px;
-  height:19px;
-  background:#171725;
-  border-radius:0 0 12px 12px;
-}
-
-.phone-top{
-  margin-top:17px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.phone-title{
+.job-loading-text{
   font-size:15px;
-  font-weight:800;
+  color:var(--muted)
 }
 
-.phone-count{
-  color:var(--muted);
-  font-size:9px;
+.job-loader{
+  width:38px;
+  height:38px;
+  border:4px solid #e9e5ff;
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:jobSpin .8s linear infinite;
+  margin:0 auto 18px
 }
 
-.phone-card{
-  margin-top:10px;
-  padding:11px;
-  border:1px solid var(--border);
-  border-radius:15px;
-  text-align:left;
-  box-shadow:0 4px 14px rgba(30,20,70,.04);
+@keyframes jobSpin{
+  to{transform:rotate(360deg)}
 }
 
-.phone-card-title{
-  font-size:10px;
-  line-height:1.25;
-  font-weight:800;
-}
 
-.salary{
-  margin-top:4px;
-  color:var(--accent);
-  font-size:11px;
-  font-weight:800;
-}
+/* =========================
+   HEADER
+========================= */
 
-.meta{
-  margin-top:4px;
-  color:var(--muted);
-  font-size:8px;
-}
-
-.tag{
-  display:inline-block;
-  margin-top:7px;
-  padding:4px 6px;
-  border-radius:7px;
-  background:#f6f5f9;
-  color:#676679;
-  font-size:7px;
-}
-
-.floating{
-  position:absolute;
-  right:28px;
-  bottom:54px;
-  padding:11px 13px;
-  border:1px solid var(--border);
-  border-radius:15px;
-  background:#fff;
-  box-shadow:0 12px 30px rgba(30,20,80,.12);
-  text-align:left;
-  font-size:10px;
-  font-weight:800;
-}
-
-.floating span{
-  display:block;
-  margin-top:3px;
-  color:var(--green);
-  font-size:9px;
-}
-
-/* SECTIONS */
-
-.section{
-  padding:48px 18px;
-}
-
-.section.soft{
-  background:#faf9fd;
-}
-
-.kicker{
-  color:var(--accent);
-  font-size:11px;
-  font-weight:850;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-}
-
-.section h2{
-  margin:8px 0 10px;
-  font-size:29px;
-  line-height:1.07;
-  letter-spacing:-1.2px;
-  font-weight:850;
-}
-
-.section-desc{
-  margin:0 0 23px;
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.5;
-}
-
-/* JOBS */
-
-.jobs{
+.job-header{
   display:flex;
-  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  padding:4px 0 18px
+}
+
+.job-header-logo{
+  display:flex;
+  align-items:center;
   gap:10px;
+  font-size:19px;
+  font-weight:800
 }
 
-.job{
-  padding:15px;
-  border:1px solid var(--border);
-  border-radius:19px;
-  background:#fff;
-  box-shadow:0 5px 18px rgba(30,20,70,.04);
-}
-
-.job-top{
+.job-mini-logo{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background:var(--accent);
+  color:#fff;
   display:flex;
-  gap:11px;
+  align-items:center;
+  justify-content:center;
+  font-size:20px
 }
 
-.job-icon{
-  width:43px;
-  height:43px;
-  flex:0 0 43px;
-  display:grid;
-  place-items:center;
+
+/* =========================
+   ПЕРВЫЙ ЭКРАН
+========================= */
+
+.job-hero-art{
+  height:250px;
+  border-radius:30px;
+  background:linear-gradient(145deg,#f4f1ff,#fbfaff);
+  border:1px solid #eeeaff;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:25px
+}
+
+.job-hero-phone{
+  width:154px;
+  height:220px;
+  border:7px solid #171725;
+  border-radius:28px;
+  background:#fff;
+  transform:rotate(-8deg) translateY(9px);
+  box-shadow:0 20px 35px rgba(30,20,80,.15);
+  padding:16px 11px;
+  position:relative;
+  z-index:2
+}
+
+.job-hero-screen{
+  height:42px;
+  background:#eeeaff;
+  border-radius:12px;
+  margin-bottom:10px
+}
+
+.job-hero-line{
+  height:8px;
+  background:#e9e5ff;
+  border-radius:8px;
+  margin:9px 0
+}
+
+.job-hero-line.short{
+  width:65%
+}
+
+.job-hero-check{
+  height:65px;
+  border-radius:16px;
+  background:#ecfff6;
+  color:#20b978;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:31px;
+  font-weight:800;
+  margin-top:18px
+}
+
+.job-plant{
+  position:absolute;
+  bottom:-3px;
+  left:24px;
+  font-size:60px
+}
+
+.job-cup{
+  position:absolute;
+  bottom:0;
+  right:25px;
+  font-size:53px
+}
+
+.job-star{
+  position:absolute;
+  color:#b8a8ff;
+  font-size:35px;
+  right:45px;
+  top:35px
+}
+
+.job-h1{
+  font-size:35px;
+  line-height:1.06;
+  letter-spacing:-1.6px;
+  margin:0 0 16px;
+  font-weight:800
+}
+
+.job-h1 span{
+  color:var(--accent)
+}
+
+.job-subtitle{
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.5;
+  margin:0 0 18px
+}
+
+.job-benefits{
+  background:#f8f7fc;
+  border-radius:22px;
+  padding:7px 14px;
+  margin:0 0 18px
+}
+
+.job-benefit{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:11px 0
+}
+
+.job-benefit+.job-benefit{
+  border-top:1px solid #eeeef5
+}
+
+.job-benefit-icon{
+  width:39px;
+  height:39px;
+  flex:0 0 39px;
   border-radius:13px;
   background:var(--soft);
   color:var(--accent);
-  font-size:19px;
-}
-
-.job-main{
-  min-width:0;
-}
-
-.job-title{
-  font-size:14px;
-  line-height:1.25;
-  font-weight:800;
-}
-
-.job-salary{
-  margin-top:4px;
-  color:var(--accent);
-  font-size:15px;
-  font-weight:850;
-}
-
-.job-meta{
-  margin-top:4px;
-  color:var(--muted);
-  font-size:10px;
-}
-
-.tags{
   display:flex;
-  gap:5px;
-  flex-wrap:wrap;
-  margin-top:10px;
+  align-items:center;
+  justify-content:center;
+  font-size:19px
 }
 
-.tags span{
-  padding:5px 7px;
-  border-radius:8px;
-  background:#f6f5f9;
-  color:#676679;
-  font-size:9px;
-}
-
-.jobs-btn{
-  margin-top:17px;
-}
-
-/* FEATURES */
-
-.features{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.feature{
-  min-height:150px;
-  padding:17px;
-  border:1px solid var(--border);
-  border-radius:19px;
-  background:#fff;
-}
-
-.feature-icon{
-  font-size:23px;
-  margin-bottom:12px;
-}
-
-.feature h3{
-  margin:0 0 7px;
+.job-benefit-title{
   font-size:14px;
+  font-weight:800
 }
 
-.feature p{
-  margin:0;
-  color:var(--muted);
+.job-benefit-text{
   font-size:11px;
-  line-height:1.45;
-}
-
-/* APP PREVIEW */
-
-.app-preview{
-  text-align:center;
-}
-
-.preview-phone{
-  width:210px;
-  height:365px;
-  margin:0 auto 27px;
-  padding:14px;
-  border:7px solid #171725;
-  border-radius:32px;
-  background:#fff;
-  box-shadow:0 22px 50px rgba(30,20,80,.16);
-}
-
-.preview-head{
-  margin-top:8px;
-  font-size:16px;
-  font-weight:800;
-}
-
-.preview-box{
-  margin-top:15px;
-  padding:15px;
-  border-radius:17px;
-  background:var(--soft);
-  text-align:left;
-}
-
-.preview-box strong{
-  font-size:12px;
-}
-
-.preview-box p{
-  margin:7px 0 0;
   color:var(--muted);
-  font-size:9px;
-  line-height:1.45;
+  margin-top:2px
 }
 
-/* STEPS */
-
-.steps{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.step{
-  display:flex;
-  gap:13px;
-  padding:16px;
-  border:1px solid var(--border);
-  border-radius:18px;
-  background:#fff;
-}
-
-.step-num{
-  width:38px;
-  height:38px;
-  flex:0 0 38px;
-  display:grid;
-  place-items:center;
-  border-radius:12px;
-  background:var(--soft);
-  color:var(--accent);
-  font-size:12px;
-  font-weight:900;
-}
-
-.step h3{
-  margin:1px 0 5px;
-  font-size:14px;
-}
-
-.step p{
-  margin:0;
-  color:var(--muted);
-  font-size:11px;
-  line-height:1.4;
-}
-
-/* CTA */
-
-.final-cta{
-  padding:55px 18px 105px;
-  text-align:center;
-  color:#fff;
-  background:linear-gradient(135deg,#5d3df0,#8064ff);
-}
-
-.final-cta h2{
-  margin:0 0 11px;
-  font-size:31px;
-  line-height:1.06;
-  letter-spacing:-1.3px;
-}
-
-.final-cta p{
-  margin:0 auto 22px;
-  max-width:350px;
-  color:rgba(255,255,255,.82);
-  font-size:13px;
-  line-height:1.5;
-}
-
-.final-btn{
+.job-btn{
   width:100%;
-  min-height:57px;
-  border-radius:17px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#fff;
-  color:var(--accent);
-  font-size:16px;
-  font-weight:850;
-}
-
-/* STICKY CTA */
-
-.sticky-download{
-  position:fixed;
-  left:50%;
-  bottom:10px;
-  transform:translateX(-50%);
-  z-index:100;
-  width:min(394px,calc(100% - 24px));
-  min-height:54px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:16px;
+  min-height:58px;
+  border:0;
+  border-radius:18px;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   color:#fff;
-  box-shadow:0 13px 30px rgba(104,70,255,.32);
-  font-size:15px;
-  font-weight:850;
+  font-size:16px;
+  font-weight:750;
+  cursor:pointer;
+  box-shadow:0 12px 24px rgba(104,70,255,.2)
 }
 
-/* FOOTER */
+.job-btn:active{
+  transform:scale(.98)
+}
 
-.footer{
-  padding:23px 18px 85px;
-  color:#9292a2;
-  background:#fff;
+.job-under{
   text-align:center;
-  font-size:10px;
+  color:#858597;
+  font-size:12px;
+  margin-top:12px
 }
 
-/* SMALL PHONES */
 
-@media(max-width:350px){
-  .hero h1{font-size:34px}
-  .phone{width:205px}
-  .floating{right:13px}
-  .features{grid-template-columns:1fr}
+/* =========================
+   ОПРОС
+========================= */
+
+.job-question-progress{
+  display:flex;
+  gap:6px;
+  margin:8px 0 28px
+}
+
+.job-progress{
+  height:5px;
+  border-radius:10px;
+  background:#e9e7f1;
+  flex:1
+}
+
+.job-progress.active{
+  background:var(--accent)
+}
+
+.job-question-number{
+  color:var(--accent);
+  font-size:13px;
+  font-weight:750;
+  margin-bottom:8px
+}
+
+.job-question-title{
+  font-size:30px;
+  line-height:1.1;
+  letter-spacing:-1px;
+  font-weight:800;
+  margin-bottom:10px
+}
+
+.job-question-subtitle{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+  margin-bottom:28px
+}
+
+.job-answer{
+  width:100%;
+  min-height:64px;
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:18px;
+  margin-bottom:10px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  text-align:left;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:700;
+  color:var(--text);
+  transition:.15s
+}
+
+.job-answer:hover{
+  border-color:var(--accent)
+}
+
+.job-answer:active{
+  transform:scale(.98);
+  background:var(--soft)
+}
+
+.job-answer-icon{
+  width:40px;
+  height:40px;
+  border-radius:13px;
+  background:var(--soft);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-right:12px;
+  color:var(--accent);
+  font-size:20px
+}
+
+.job-answer-arrow{
+  margin-left:auto;
+  color:#aaa;
+  font-size:21px
+}
+
+
+/* =========================
+   НЕ ПОДХОДИТ
+========================= */
+
+.job-reject{
+  align-items:center;
+  justify-content:center;
+  text-align:center
+}
+
+.job-reject-icon{
+  width:86px;
+  height:86px;
+  border-radius:28px;
+  background:#f5f3f8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:38px;
+  margin-bottom:22px
+}
+
+.job-reject h1{
+  font-size:29px;
+  line-height:1.1;
+  letter-spacing:-.7px;
+  margin:0 0 12px
+}
+
+.job-reject p{
+  max-width:310px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+  margin:0 0 25px
+}
+
+.job-secondary-btn{
+  width:100%;
+  min-height:54px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:#fff;
+  color:var(--text);
+  font-weight:700;
+  cursor:pointer
+}
+
+
+/* =========================
+   ВАКАНСИИ
+========================= */
+
+.job-topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px
+}
+
+.job-count{
+  color:var(--muted);
+  font-size:13px
+}
+
+.job-h2{
+  font-size:28px;
+  line-height:1.1;
+  letter-spacing:-.8px;
+  margin:5px 0 7px;
+  font-weight:800
+}
+
+.job-vacancy-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:15px;
+  margin-bottom:10px;
+  cursor:pointer;
+  box-shadow:0 5px 18px rgba(30,20,70,.04)
+}
+
+.job-vacancy-top{
+  display:flex;
+  gap:12px
+}
+
+.job-vacancy-icon{
+  flex:0 0 44px;
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  background:var(--soft);
+  color:var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px
+}
+
+.job-vacancy-title{
+  font-size:15px;
+  line-height:1.25;
+  font-weight:800
+}
+
+.job-vacancy-salary{
+  font-size:16px;
+  font-weight:800;
+  color:var(--accent);
+  margin-top:5px
+}
+
+.job-vacancy-meta{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px
+}
+
+.job-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-top:10px
+}
+
+.job-tag{
+  background:#f6f5f9;
+  color:#676679;
+  border-radius:9px;
+  padding:5px 8px;
+  font-size:10px
+}
+
+.job-apply-small{
+  border:0;
+  background:var(--accent);
+  color:#fff;
+  border-radius:12px;
+  padding:10px 13px;
+  font-size:12px;
+  font-weight:750;
+  cursor:pointer
+}
+
+
+/* =========================
+   ДЕТАЛИ
+========================= */
+
+.job-back{
+  border:0;
+  background:#f4f3f8;
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  font-size:20px;
+  cursor:pointer
+}
+
+.job-detail-icon{
+  width:68px;
+  height:68px;
+  border-radius:21px;
+  background:var(--soft);
+  color:var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+  margin:8px 0 16px
+}
+
+.job-detail-title{
+  font-size:27px;
+  line-height:1.1;
+  letter-spacing:-.7px;
+  font-weight:800;
+  margin-bottom:9px
+}
+
+.job-detail-salary{
+  font-size:22px;
+  font-weight:800;
+  color:var(--accent);
+  margin-bottom:18px
+}
+
+.job-detail-meta{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-bottom:22px
+}
+
+.job-meta-box{
+  background:#f7f6fa;
+  border-radius:15px;
+  padding:12px
+}
+
+.job-meta-label{
+  color:var(--muted);
+  font-size:10px;
+  margin-bottom:5px
+}
+
+.job-meta-value{
+  font-size:12px;
+  font-weight:700
+}
+
+.job-detail-section{
+  margin-bottom:20px
+}
+
+.job-detail-section h3{
+  font-size:16px;
+  margin:0 0 8px
+}
+
+.job-detail-section p,
+.job-detail-section li{
+  color:#626274;
+  font-size:13px;
+  line-height:1.5
+}
+
+.job-detail-section ul{
+  padding-left:18px;
+  margin:7px 0
+}
+
+
+/* =========================
+   МЕССЕНДЖЕР
+========================= */
+
+.job-messenger{
+  text-align:center;
+  padding-top:60px
+}
+
+.job-messenger-icon{
+  width:76px;
+  height:76px;
+  border-radius:25px;
+  background:var(--soft);
+  color:var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:36px;
+  margin:0 auto 20px
+}
+
+.job-messenger h1{
+  font-size:28px;
+  line-height:1.1;
+  letter-spacing:-.8px;
+  margin:0 0 10px
+}
+
+.job-messenger p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.45;
+  margin:0 auto 28px;
+  max-width:300px
+}
+
+.job-messenger-btn{
+  width:100%;
+  min-height:65px;
+  border:0;
+  border-radius:18px;
+  margin-bottom:10px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  text-align:left;
+  cursor:pointer;
+  color:#fff
+}
+
+.job-messenger-btn.telegram{
+  background:#249edb
+}
+
+.job-messenger-btn.max{
+  background:#26213b
+}
+
+.job-messenger-logo{
+  width:40px;
+  height:40px;
+  border-radius:13px;
+  background:rgba(255,255,255,.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-right:12px;
+  font-size:20px
+}
+
+.job-messenger-name{
+  font-size:15px;
+  font-weight:750
+}
+
+.job-messenger-desc{
+  font-size:11px;
+  opacity:.8;
+  margin-top:3px
+}
+
+.job-messenger-arrow{
+  margin-left:auto;
+  font-size:20px
+}
+
+
+/* =========================
+   SUCCESS
+========================= */
+
+.job-success{
+  text-align:center;
+  align-items:center;
+  justify-content:center
+}
+
+.job-success-icon{
+  width:90px;
+  height:90px;
+  border-radius:30px;
+  background:#e9fbf3;
+  color:var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:46px;
+  margin-bottom:22px
+}
+
+.job-success h1{
+  font-size:30px;
+  line-height:1.1;
+  margin:0 0 12px
+}
+
+.job-success p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+  max-width:300px;
+  margin:0 0 25px
 }
 </style>
-<link rel="manifest" href="./manifest.json">
-<link rel="icon" href="./icon-192.png" type="image/png">
-<meta name="theme-color" content="#6846ff">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
-    navigator.serviceWorker.register("./sw.js", {scope:"./"}).catch(console.error);
-  });
-}
-</script>
-</head>
 
-<body>
 
-<div class="page">
 
-<header class="header">
-  <div class="brand">
-    <div class="logo">✓</div>
-    <span>Моя подработка</span>
-  </div>
-  <a class="header-btn" href="#download">Скачать</a>
-</header>
+<section id="install-success" style="
+  display:none;
+  min-height:100vh;
+  padding:28px 20px;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:linear-gradient(180deg,#ffffff 0%,#f7f5ff 100%);
+  font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Roboto,Arial,sans-serif;
+">
+  <div style="width:100%;max-width:360px;">
+    <div style="
+      width:82px;height:82px;margin:0 auto 22px;
+      border-radius:26px;
+      display:flex;align-items:center;justify-content:center;
+      background:#e9fbf3;color:#20b978;
+      font-size:42px;font-weight:800;
+    ">✓</div>
 
-<main>
+    <h1 style="
+      margin:0 0 12px;
+      font-size:30px;
+      line-height:1.1;
+      letter-spacing:-1px;
+      color:#17172a;
+    ">Приложение установлено!</h1>
 
-<section class="hero">
-  <div class="eyebrow">📱 Приложение для поиска работы</div>
+    <p style="
+      margin:0 auto 25px;
+      max-width:300px;
+      color:#77778b;
+      font-size:15px;
+      line-height:1.5;
+    ">
+      Перейдите на главный экран телефона и откройте «Моя подработка».
+    </p>
 
-  <h1>
-    Найди подработку,
-    <span>которая подходит тебе</span>
-  </h1>
-
-  <p class="hero-text">
-    Актуальные вакансии с удобным графиком и возможностью работать удалённо — всё в одном приложении.
-  </p>
-
-  <a class="main-btn" href="#download">
-    Скачать приложение →
-  </a>
-
-  <div class="btn-note">
-    Бесплатно · Быстрая установка
-  </div>
-
-  <div class="phone-stage">
-    <div class="phone">
-      <div class="notch"></div>
-
-      <div class="phone-top">
-        <div class="phone-title">Вакансии</div>
-        <div class="phone-count">10 вакансий</div>
-      </div>
-
-      <div class="phone-card">
-        <div class="phone-card-title">
-          Менеджер по работе с таблицами
-        </div>
-        <div class="salary">70 000 — 90 000 ₽</div>
-        <div class="meta">🏠 Удалённо · Гибкий график</div>
-        <span class="tag">Без опыта</span>
-      </div>
-
-      <div class="phone-card">
-        <div class="phone-card-title">
-          Помощник бухгалтера
-        </div>
-        <div class="salary">75 000 — 100 000 ₽</div>
-        <div class="meta">🏠 Удалённо · Гибкий график</div>
-        <span class="tag">Без опыта</span>
-      </div>
-
-      <div class="phone-card">
-        <div class="phone-card-title">
-          Копирайтер
-        </div>
-        <div class="salary">70 000 — 90 000 ₽</div>
-        <div class="meta">🏠 Удалённо · Гибкий график</div>
-        <span class="tag">От 1 года</span>
-      </div>
-    </div>
-
-    <div class="floating">
-      10 вакансий
-      <span>доступны в приложении</span>
+    <div style="
+      padding:15px 16px;
+      border-radius:17px;
+      background:#f1eeff;
+      color:#6846ff;
+      font-size:13px;
+      line-height:1.45;
+      font-weight:700;
+    ">
+      📱 Найдите иконку приложения на главном экране
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="kicker">Вакансии</div>
+<div id="job-app">
 
-  <h2>Посмотри, какая работа доступна сейчас</h2>
 
-  <p class="section-desc">
-    Примеры предложений, которые можно найти в приложении.
-  </p>
+  <!-- =================================
+       ЗАГРУЗКА
+  ================================= -->
 
-  <div class="jobs">
+  <section
+    class="job-screen active"
+    id="job-loading"
+  >
 
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">▦</div>
-        <div class="job-main">
-          <div class="job-title">Менеджер по работе с таблицами</div>
-          <div class="job-salary">70 000 — 90 000 ₽</div>
-          <div class="job-meta">Удалённо · Без опыта</div>
-        </div>
-      </div>
-      <div class="tags">
-        <span>Удалённо</span>
-        <span>Гибкий график</span>
-      </div>
-    </article>
-
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">₽</div>
-        <div class="job-main">
-          <div class="job-title">Помощник бухгалтера</div>
-          <div class="job-salary">75 000 — 100 000 ₽</div>
-          <div class="job-meta">Удалённо · Без опыта</div>
-        </div>
-      </div>
-      <div class="tags">
-        <span>Удалённо</span>
-        <span>Гибкий график</span>
-      </div>
-    </article>
-
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">✎</div>
-        <div class="job-main">
-          <div class="job-title">Копирайтер</div>
-          <div class="job-salary">70 000 — 90 000 ₽</div>
-          <div class="job-meta">Удалённо · От 1 года</div>
-        </div>
-      </div>
-      <div class="tags">
-        <span>Удалённо</span>
-        <span>Гибкий график</span>
-      </div>
-    </article>
-
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">◫</div>
-        <div class="job-main">
-          <div class="job-title">Помощник аналитика</div>
-          <div class="job-salary">80 000 — 100 000 ₽</div>
-          <div class="job-meta">Удалённо · От 1 года</div>
-        </div>
-      </div>
-      <div class="tags">
-        <span>Удалённо</span>
-        <span>Гибкий график</span>
-      </div>
-    </article>
-
-  </div>
-
-  <div class="jobs-btn">
-    <a class="main-btn" href="#download">
-      Смотреть больше вакансий →
-    </a>
-  </div>
-</section>
-
-<section class="section soft">
-  <div class="kicker">Возможности</div>
-
-  <h2>Всё необходимое для поиска подработки</h2>
-
-  <p class="section-desc">
-    Выбирайте подходящие предложения и откликайтесь прямо с телефона.
-  </p>
-
-  <div class="features">
-
-    <article class="feature">
-      <div class="feature-icon">🔎</div>
-      <h3>Подходящие вакансии</h3>
-      <p>Смотрите доступные предложения и выбирайте подходящий вариант.</p>
-    </article>
-
-    <article class="feature">
-      <div class="feature-icon">🏠</div>
-      <h3>Удалённый формат</h3>
-      <p>Вакансии с возможностью работать из дома.</p>
-    </article>
-
-    <article class="feature">
-      <div class="feature-icon">🕐</div>
-      <h3>Гибкий график</h3>
-      <p>Работа, которую можно подстроить под своё расписание.</p>
-    </article>
-
-    <article class="feature">
-      <div class="feature-icon">📱</div>
-      <h3>Всегда под рукой</h3>
-      <p>Открывайте приложение в любое удобное время.</p>
-    </article>
-
-  </div>
-</section>
-
-<section class="section app-preview">
-
-  <div class="kicker">Приложение</div>
-
-  <h2>Ищите работу прямо с телефона</h2>
-
-  <p class="section-desc">
-    Откройте вакансию, посмотрите условия и выберите удобный способ отклика.
-  </p>
-
-  <div class="preview-phone">
-
-    <div class="preview-head">
-      Вакансия
+    <div class="job-logo">
+      ✓
     </div>
 
-    <div class="preview-box">
-      <strong>Менеджер по работе с таблицами</strong>
-      <div class="salary">70 000 — 90 000 ₽</div>
-      <p>
-        Удалённый формат<br>
-        Гибкий график<br>
-        Без опыта
-      </p>
+    <div class="job-brand">
+      Моя подработка
     </div>
 
-    <div class="preview-box">
-      <strong>Что предстоит делать</strong>
-      <p>
-        Работать с таблицами,
-        обрабатывать информацию
-        и подготавливать отчёты.
-      </p>
+    <div class="job-loader"></div>
+
+    <div class="job-loading-text">
+      Подбираем для вас вакансии...
     </div>
 
-  </div>
+  </section>
 
-  <a class="main-btn" href="#download">
-    Скачать приложение →
-  </a>
 
-</section>
+  <!-- =================================
+       ПЕРВЫЙ ЭКРАН
+  ================================= -->
 
-<section class="section soft">
+  <section
+    class="job-screen"
+    id="job-welcome"
+  >
 
-  <div class="kicker">Как это работает</div>
+    <div class="job-header">
 
-  <h2>Начать проще, чем кажется</h2>
+      <div class="job-header-logo">
 
-  <p class="section-desc">
-    Несколько простых шагов — и можно смотреть доступные вакансии.
-  </p>
+        <div class="job-mini-logo">
+          ✓
+        </div>
 
-  <div class="steps">
+        Моя подработка
 
-    <div class="step">
-      <div class="step-num">01</div>
+      </div>
+
+    </div>
+
+
+    <div class="job-hero-art">
+
+      <div class="job-star">
+        ✦
+      </div>
+
+      <div class="job-plant">
+        🪴
+      </div>
+
+      <div class="job-cup">
+        ☕
+      </div>
+
+
+      <div class="job-hero-phone">
+
+        <div class="job-hero-screen"></div>
+
+        <div class="job-hero-line"></div>
+
+        <div class="job-hero-line short"></div>
+
+        <div class="job-hero-line"></div>
+
+        <div class="job-hero-check">
+          ✓
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <h1 class="job-h1">
+
+      Найди удалённую работу,
+      <br>
+
+      которая
+      <span>
+        подходит именно тебе
+      </span>
+
+    </h1>
+
+
+    <p class="job-subtitle">
+
+      Актуальные вакансии с хорошей оплатой,
+      удобным графиком и возможностью работать
+      из дома.
+
+    </p>
+
+
+    <div class="job-benefits">
+
+
+      <div class="job-benefit">
+
+        <div class="job-benefit-icon">
+          ₽
+        </div>
+
+        <div>
+
+          <div class="job-benefit-title">
+            Хорошая оплата
+          </div>
+
+          <div class="job-benefit-text">
+            От 70 000 ₽ и выше
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="job-benefit">
+
+        <div class="job-benefit-icon">
+          ⌂
+        </div>
+
+        <div>
+
+          <div class="job-benefit-title">
+            Работа из дома
+          </div>
+
+          <div class="job-benefit-text">
+            Никаких поездок в офис
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="job-benefit">
+
+        <div class="job-benefit-icon">
+          ◷
+        </div>
+
+        <div>
+
+          <div class="job-benefit-title">
+            Удобный график
+          </div>
+
+          <div class="job-benefit-text">
+            Гибкий график
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <button
+      class="job-btn"
+      id="start-search"
+    >
+      Найти подходящую вакансию →
+    </button>
+
+
+    <div class="job-under">
+      ♡ Бесплатно · Без регистрации
+    </div>
+
+  </section>
+
+
+  <!-- =================================
+       ВОПРОС 1
+  ================================= -->
+
+  <section
+    class="job-screen"
+    id="job-question-citizenship"
+  >
+
+    <div class="job-header">
+
+      <div class="job-header-logo">
+
+        <div class="job-mini-logo">
+          ✓
+        </div>
+
+        Моя подработка
+
+      </div>
+
+    </div>
+
+
+    <div class="job-question-progress">
+
+      <div class="job-progress active"></div>
+
+      <div class="job-progress"></div>
+
+    </div>
+
+
+    <div class="job-question-number">
+      Вопрос 1 из 2
+    </div>
+
+
+    <div class="job-question-title">
+      Есть ли у вас гражданство РФ?
+    </div>
+
+
+    <div class="job-question-subtitle">
+      Ответьте на два коротких вопроса,
+      чтобы мы могли показать подходящие
+      вам вакансии.
+    </div>
+
+
+    <button
+      class="job-answer"
+      id="citizenship-yes"
+    >
+
+      <div class="job-answer-icon">
+        ✓
+      </div>
+
+      <span>
+        Да, есть
+      </span>
+
+      <span class="job-answer-arrow">
+        →
+      </span>
+
+    </button>
+
+
+    <button
+      class="job-answer"
+      id="citizenship-no"
+    >
+
+      <div class="job-answer-icon">
+        —
+      </div>
+
+      <span>
+        Нет
+      </span>
+
+      <span class="job-answer-arrow">
+        →
+      </span>
+
+    </button>
+
+  </section>
+
+
+  <!-- =================================
+       ВОПРОС 2
+  ================================= -->
+
+  <section
+    class="job-screen"
+    id="job-question-age"
+  >
+
+    <div class="job-header">
+
+      <div class="job-header-logo">
+
+        <div class="job-mini-logo">
+          ✓
+        </div>
+
+        Моя подработка
+
+      </div>
+
+    </div>
+
+
+    <div class="job-question-progress">
+
+      <div class="job-progress active"></div>
+
+      <div class="job-progress active"></div>
+
+    </div>
+
+
+    <div class="job-question-number">
+      Вопрос 2 из 2
+    </div>
+
+
+    <div class="job-question-title">
+      Сколько вам лет?
+    </div>
+
+
+    <div class="job-question-subtitle">
+      Выберите свой возрастной диапазон.
+    </div>
+
+
+    <button
+      class="job-answer age-answer"
+      data-age="under23"
+    >
+
+      <div class="job-answer-icon">
+        18+
+      </div>
+
+      <span>
+        До 23 лет
+      </span>
+
+      <span class="job-answer-arrow">
+        →
+      </span>
+
+    </button>
+
+
+    <button
+      class="job-answer age-answer"
+      data-age="23plus"
+    >
+
+      <div class="job-answer-icon">
+        23+
+      </div>
+
+      <span>
+        23 года и старше
+      </span>
+
+      <span class="job-answer-arrow">
+        →
+      </span>
+
+    </button>
+
+  </section>
+
+
+  <!-- =================================
+       НЕ ПОДХОДИТ — ГРАЖДАНСТВО
+  ================================= -->
+
+  <section
+    class="job-screen job-reject"
+    id="job-reject-citizenship"
+  >
+
+    <div class="job-reject-icon">
+      ℹ
+    </div>
+
+
+    <h1>
+      Пока вы не подходите
+    </h1>
+
+
+    <p>
+      На данный момент эти вакансии
+      доступны кандидатам с гражданством РФ.
+    </p>
+
+
+    <button
+      class="job-secondary-btn"
+      id="reject-citizenship-back"
+    >
+      Вернуться назад
+    </button>
+
+  </section>
+
+
+  <!-- =================================
+       НЕ ПОДХОДИТ — ВОЗРАСТ
+  ================================= -->
+
+  <section
+    class="job-screen job-reject"
+    id="job-reject-age"
+  >
+
+    <div class="job-reject-icon">
+      ℹ
+    </div>
+
+
+    <h1>
+      Пока вы не подходите
+    </h1>
+
+
+    <p>
+      На данный момент эти вакансии
+      доступны кандидатам от 23 лет.
+    </p>
+
+
+    <button
+      class="job-secondary-btn"
+      id="reject-age-back"
+    >
+      Вернуться назад
+    </button>
+
+  </section>
+
+
+  <!-- =================================
+       ВАКАНСИИ
+  ================================= -->
+
+  <section
+    class="job-screen"
+    id="job-vacancies"
+  >
+
+    <div class="job-topbar">
+
+      <div class="job-header-logo">
+
+        <div class="job-mini-logo">
+          ✓
+        </div>
+
+        Моя подработка
+
+      </div>
+
+
+      <div class="job-count">
+        10 вакансий
+      </div>
+
+    </div>
+
+
+    <h2 class="job-h2">
+      Вакансии
+    </h2>
+
+
+    <p
+      class="job-subtitle"
+      style="margin-bottom:18px"
+    >
+      Все вакансии — удалённый формат
+    </p>
+
+
+    <div id="job-vacancy-list"></div>
+
+  </section>
+
+
+  <!-- =================================
+       ДЕТАЛИ ВАКАНСИИ
+  ================================= -->
+
+  <section
+    class="job-screen"
+    id="job-detail"
+  >
+
+    <div class="job-topbar">
+
+      <button
+        class="job-back"
+        id="detail-back"
+      >
+        ←
+      </button>
+
+
+      <div class="job-count">
+        Вакансия
+      </div>
+
+
+      <div style="width:42px"></div>
+
+    </div>
+
+
+    <div
+      class="job-detail-icon"
+      id="detail-icon"
+    >
+      💼
+    </div>
+
+
+    <div
+      class="job-detail-title"
+      id="detail-title"
+    ></div>
+
+
+    <div
+      class="job-detail-salary"
+      id="detail-salary"
+    ></div>
+
+
+    <div class="job-detail-meta">
+
+
+      <div class="job-meta-box">
+
+        <div class="job-meta-label">
+          Формат работы
+        </div>
+
+        <div class="job-meta-value">
+          Удалённо
+        </div>
+
+      </div>
+
+
+      <div class="job-meta-box">
+
+        <div class="job-meta-label">
+          График
+        </div>
+
+        <div class="job-meta-value">
+          Гибкий график
+        </div>
+
+      </div>
+
+
+      <div class="job-meta-box">
+
+        <div class="job-meta-label">
+          Опыт
+        </div>
+
+        <div
+          class="job-meta-value"
+          id="detail-experience"
+        ></div>
+
+      </div>
+
+
+      <div class="job-meta-box">
+
+        <div class="job-meta-label">
+          Формат
+        </div>
+
+        <div class="job-meta-value">
+          Работа из дома
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="job-detail-section">
+
+      <h3>
+        О вакансии
+      </h3>
+
+      <p
+        id="detail-description"
+      ></p>
+
+    </div>
+
+
+    <div class="job-detail-section">
+
+      <h3>
+        Что предстоит делать
+      </h3>
+
+      <ul
+        id="detail-tasks"
+      ></ul>
+
+    </div>
+
+
+    <div class="job-detail-section">
+
+      <h3>
+        Что предлагаем
+      </h3>
+
+      <ul>
+
+        <li>
+          Полностью удалённый формат
+        </li>
+
+        <li>
+          Гибкий график
+        </li>
+
+        <li>
+          Поддержку на этапе адаптации
+        </li>
+
+      </ul>
+
+    </div>
+
+
+    <div
+      style="
+        margin-top:auto;
+        padding-top:12px
+      "
+    >
+
+      <button
+        class="job-btn"
+        id="apply-button"
+      >
+        Откликнуться
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================
+       TELEGRAM / MAX
+  ================================= -->
+
+  <section
+    class="job-screen job-messenger"
+    id="job-messenger"
+  >
+
+    <div class="job-messenger-icon">
+      💬
+    </div>
+
+
+    <h1>
+      Куда отправить отклик?
+    </h1>
+
+
+    <p>
+      Выберите мессенджер,
+      в котором вам будет удобно
+      продолжить общение.
+    </p>
+
+
+    <button
+      class="job-messenger-btn telegram"
+      id="telegram-button"
+    >
+
+      <div class="job-messenger-logo">
+        ➤
+      </div>
+
+
       <div>
-        <h3>Скачайте приложение</h3>
-        <p>Установите «Моя подработка» на телефон.</p>
-      </div>
-    </div>
 
-    <div class="step">
-      <div class="step-num">02</div>
-      <div>
-        <h3>Ответьте на несколько вопросов</h3>
-        <p>Это поможет показать подходящие предложения.</p>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">03</div>
-      <div>
-        <h3>Посмотрите вакансии</h3>
-        <p>Изучайте доступные предложения прямо в приложении.</p>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">04</div>
-      <div>
-        <h3>Выберите и откликнитесь</h3>
-        <p>Откройте детали вакансии и продолжите общение.</p>
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section">
-
-  <div class="kicker">Ещё предложения</div>
-
-  <h2>Ваша следующая подработка может быть уже здесь</h2>
-
-  <p class="section-desc">
-    Откройте приложение и посмотрите все доступные вакансии.
-  </p>
-
-  <div class="jobs">
-
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">▤</div>
-        <div class="job-main">
-          <div class="job-title">Специалист по работе с документами</div>
-          <div class="job-salary">70 000 — 85 000 ₽</div>
-          <div class="job-meta">Удалённо · Без опыта</div>
+        <div class="job-messenger-name">
+          Telegram
         </div>
-      </div>
-    </article>
 
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">▣</div>
-        <div class="job-main">
-          <div class="job-title">Контент-менеджер</div>
-          <div class="job-salary">75 000 — 95 000 ₽</div>
-          <div class="job-meta">Удалённо · От 1 года</div>
+        <div class="job-messenger-desc">
+          Откликнуться в Telegram
         </div>
-      </div>
-    </article>
 
-    <article class="job">
-      <div class="job-top">
-        <div class="job-icon">⌘</div>
-        <div class="job-main">
-          <div class="job-title">Оператор удалённого офиса</div>
-          <div class="job-salary">70 000 — 90 000 ₽</div>
-          <div class="job-meta">Удалённо · Без опыта</div>
+      </div>
+
+
+      <div class="job-messenger-arrow">
+        →
+      </div>
+
+    </button>
+
+
+    <button
+      class="job-messenger-btn max"
+      id="max-button"
+    >
+
+      <div class="job-messenger-logo">
+        ●
+      </div>
+
+
+      <div>
+
+        <div class="job-messenger-name">
+          MAX
         </div>
+
+        <div class="job-messenger-desc">
+          Откликнуться в MAX
+        </div>
+
       </div>
-    </article>
 
-  </div>
 
-</section>
+      <div class="job-messenger-arrow">
+        →
+      </div>
 
-<section class="final-cta" id="download">
+    </button>
 
-  <h2>Готовы найти подходящую подработку?</h2>
+  </section>
 
-  <p>
-    Установите «Моя подработка» и начните смотреть доступные вакансии.
-  </p>
 
-  <!-- ЗАМЕНИТЬ НА URL PWA -->
-  <a class="final-btn" href="https://donprakur.github.io/moya-podrabotka/app/">
-    Скачать приложение →
-  </a>
+  <!-- =================================
+       ТЕСТОВЫЙ ЭКРАН
+  ================================= -->
 
-</section>
+  <section
+    class="job-screen job-success"
+    id="job-success"
+  >
 
-</main>
+    <div class="job-success-icon">
+      ✓
+    </div>
 
-<footer class="footer">
-  © 2026 «Моя подработка»
-</footer>
 
-<a class="sticky-download" href="#download">
-  Скачать приложение
-</a>
+    <h1>
+      Отклик отправлен!
+    </h1>
+
+
+    <p>
+      Это тестовый экран.
+      Внешние переходы пока отключены.
+    </p>
+
+
+    <button
+      class="job-btn"
+      id="back-to-vacancies"
+    >
+      Вернуться к вакансиям
+    </button>
+
+  </section>
 
 </div>
 
 
 <script>
-(() => {
-  const APP_URL = "https://donprakur.github.io/moya-podrabotka/app/";
-  let deferredPrompt = null;
+(function(){
 
-  window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredPrompt = event;
-  });
+  const vacancies = [
 
-  async function installPWA(event) {
-    if (event) event.preventDefault();
+    {
+      id:1,
+      icon:"▦",
+      title:"Менеджер по работе с таблицами",
+      salary:"70 000 — 90 000 ₽",
+      experience:"Без опыта",
+      description:"Работа с таблицами, обработка информации и подготовка простых отчётов.",
+      tasks:[
+        "Работать с таблицами",
+        "Обрабатывать входящую информацию",
+        "Подготавливать отчёты"
+      ]
+    },
 
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const choice = await deferredPrompt.userChoice;
-      deferredPrompt = null;
 
-      if (choice && choice.outcome === "accepted") return;
+    {
+      id:2,
+      icon:"₽",
+      title:"Помощник бухгалтера",
+      salary:"75 000 — 100 000 ₽",
+      experience:"Без опыта",
+      description:"Помощь бухгалтерскому отделу в работе с документами, таблицами и текущими задачами.",
+      tasks:[
+        "Работать с документами",
+        "Вести таблицы",
+        "Помогать бухгалтерскому отделу"
+      ]
+    },
+
+
+    {
+      id:3,
+      icon:"✎",
+      title:"Копирайтер",
+      salary:"70 000 — 90 000 ₽",
+      experience:"От 1 года",
+      description:"Подготовка текстов для сайтов, социальных сетей и рекламных материалов.",
+      tasks:[
+        "Писать тексты",
+        "Редактировать материалы",
+        "Работать с контент-планом"
+      ]
+    },
+
+
+    {
+      id:4,
+      icon:"◫",
+      title:"Помощник аналитика",
+      salary:"80 000 — 100 000 ₽",
+      experience:"От 1 года",
+      description:"Работа с данными, таблицами и подготовка аналитических отчётов.",
+      tasks:[
+        "Работать с данными",
+        "Подготавливать аналитические отчёты",
+        "Помогать аналитическому отделу"
+      ]
+    },
+
+
+    {
+      id:5,
+      icon:"▤",
+      title:"Менеджер по обработке данных",
+      salary:"75 000 — 95 000 ₽",
+      experience:"Без опыта",
+      description:"Обработка и систематизация информации в рабочих таблицах и внутренних системах.",
+      tasks:[
+        "Обрабатывать данные",
+        "Проверять информацию",
+        "Заполнять рабочие таблицы"
+      ]
+    },
+
+
+    {
+      id:6,
+      icon:"◎",
+      title:"Ассистент менеджера",
+      salary:"70 000 — 90 000 ₽",
+      experience:"Без опыта",
+      description:"Помощь менеджеру в организации текущих задач и работе с информацией.",
+      tasks:[
+        "Работать с задачами",
+        "Обрабатывать информацию",
+        "Помогать менеджеру"
+      ]
+    },
+
+
+    {
+      id:7,
+      icon:"▤",
+      title:"Специалист по работе с документами",
+      salary:"70 000 — 85 000 ₽",
+      experience:"Без опыта",
+      description:"Работа с электронными документами, проверка данных и ведение внутренних файлов.",
+      tasks:[
+        "Работать с документами",
+        "Проверять информацию",
+        "Вести электронные файлы"
+      ]
+    },
+
+
+    {
+      id:8,
+      icon:"▣",
+      title:"Контент-менеджер",
+      salary:"75 000 — 95 000 ₽",
+      experience:"От 1 года",
+      description:"Работа с контентом, размещение материалов и поддержание актуальности информации.",
+      tasks:[
+        "Размещать материалы",
+        "Обновлять информацию",
+        "Работать с контент-планом"
+      ]
+    },
+
+
+    {
+      id:9,
+      icon:"♡",
+      title:"Менеджер по работе с клиентами",
+      salary:"75 000 — 100 000 ₽",
+      experience:"От 1 года",
+      description:"Общение с клиентами, обработка обращений и помощь в решении возникающих вопросов.",
+      tasks:[
+        "Общаться с клиентами",
+        "Обрабатывать обращения",
+        "Работать с внутренней системой"
+      ]
+    },
+
+
+    {
+      id:10,
+      icon:"⌘",
+      title:"Оператор удалённого офиса",
+      salary:"70 000 — 90 000 ₽",
+      experience:"Без опыта",
+      description:"Работа с входящими задачами, информацией и внутренними рабочими системами.",
+      tasks:[
+        "Обрабатывать входящие задачи",
+        "Работать с информацией",
+        "Выполнять задачи по инструкции"
+      ]
+    }
+
+  ];
+
+
+  const screens =
+    document.querySelectorAll(
+      ".job-screen"
+    );
+
+
+  const list =
+    document.getElementById(
+      "job-vacancy-list"
+    );
+
+
+  let selected = null;
+
+
+  function show(id){
+
+    screens.forEach(
+      function(screen){
+
+        screen.classList.remove(
+          "active"
+        );
+
+      }
+    );
+
+
+    const target =
+      document.getElementById(id);
+
+
+    if(target){
+
+      target.classList.add(
+        "active"
+      );
+
+    }
+
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  }
+
+
+  /* =========================
+     ВАКАНСИИ
+  ========================= */
+
+  function renderVacancies(){
+
+    list.innerHTML =
+      vacancies.map(
+        function(v){
+
+          return `
+
+            <div
+              class="job-vacancy-card"
+              data-id="${v.id}"
+            >
+
+              <div
+                class="job-vacancy-top"
+              >
+
+                <div
+                  class="job-vacancy-icon"
+                >
+                  ${v.icon}
+                </div>
+
+
+                <div
+                  style="flex:1"
+                >
+
+                  <div
+                    class="job-vacancy-title"
+                  >
+                    ${v.title}
+                  </div>
+
+
+                  <div
+                    class="job-vacancy-salary"
+                  >
+                    ${v.salary}
+                  </div>
+
+
+                  <div
+                    class="job-vacancy-meta"
+                  >
+                    🏠 Удалённо ·
+                    Гибкий график
+                  </div>
+
+                </div>
+
+
+                <div
+                  style="
+                    font-size:22px;
+                    color:#aaa
+                  "
+                >
+                  ›
+                </div>
+
+              </div>
+
+
+              <div
+                style="
+                  display:flex;
+                  justify-content:space-between;
+                  align-items:center;
+                  gap:8px;
+                  margin-top:10px
+                "
+              >
+
+                <div
+                  class="job-tags"
+                  style="margin:0"
+                >
+
+                  <span
+                    class="job-tag"
+                  >
+                    Удалённо
+                  </span>
+
+
+                  <span
+                    class="job-tag"
+                  >
+                    Гибкий график
+                  </span>
+
+                </div>
+
+
+                <button
+                  class="job-apply-small"
+                  data-apply="${v.id}"
+                >
+                  Откликнуться
+                </button>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      ).join("");
+
+
+    list
+      .querySelectorAll(
+        ".job-vacancy-card"
+      )
+      .forEach(
+        function(card){
+
+          card.addEventListener(
+            "click",
+            function(event){
+
+              const apply =
+                event.target.closest(
+                  "[data-apply]"
+                );
+
+
+              if(apply){
+
+                selected =
+                  vacancies.find(
+                    function(v){
+
+                      return (
+                        v.id ===
+                        Number(
+                          apply.dataset.apply
+                        )
+                      );
+
+                    }
+                  );
+
+
+                show(
+                  "job-messenger"
+                );
+
+
+                return;
+
+              }
+
+
+              openVacancy(
+                Number(
+                  card.dataset.id
+                )
+              );
+
+            }
+          );
+
+        }
+      );
+
+  }
+
+
+  /* =========================
+     ОТКРЫТЬ ВАКАНСИЮ
+  ========================= */
+
+  function openVacancy(id){
+
+    selected =
+      vacancies.find(
+        function(v){
+
+          return v.id === id;
+
+        }
+      );
+
+
+    if(!selected){
       return;
     }
 
-    // If Chrome has not exposed an install prompt yet, open the real PWA.
-    window.location.href = APP_URL;
+
+    document.getElementById(
+      "detail-icon"
+    ).textContent =
+      selected.icon;
+
+
+    document.getElementById(
+      "detail-title"
+    ).textContent =
+      selected.title;
+
+
+    document.getElementById(
+      "detail-salary"
+    ).textContent =
+      selected.salary;
+
+
+    document.getElementById(
+      "detail-experience"
+    ).textContent =
+      selected.experience;
+
+
+    document.getElementById(
+      "detail-description"
+    ).textContent =
+      selected.description;
+
+
+    document.getElementById(
+      "detail-tasks"
+    ).innerHTML =
+      selected.tasks
+        .map(
+          function(task){
+
+            return `
+              <li>
+                ${task}
+              </li>
+            `;
+
+          }
+        )
+        .join("");
+
+
+    show(
+      "job-detail"
+    );
+
   }
 
-  document.querySelectorAll('a[href="' + APP_URL + '"]').forEach(link => {
-    link.addEventListener("click", installPWA);
+
+  /* =========================
+     ПЕРВЫЙ ЭКРАН → ВОПРОС 1
+  ========================= */
+
+  document
+    .getElementById(
+      "start-search"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        show(
+          "job-question-citizenship"
+        );
+
+      }
+    );
+
+
+  /* =========================
+     ГРАЖДАНСТВО
+  ========================= */
+
+  document
+    .getElementById(
+      "citizenship-yes"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        show(
+          "job-question-age"
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "citizenship-no"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        show(
+          "job-reject-citizenship"
+        );
+
+      }
+    );
+
+
+  /* =========================
+     ВОЗРАСТ
+  ========================= */
+
+  document
+    .querySelectorAll(
+      ".age-answer"
+    )
+    .forEach(
+      function(button){
+
+        button.addEventListener(
+          "click",
+          function(){
+
+            const age =
+              button.dataset.age;
+
+
+            if(
+              age ===
+              "under23"
+            ){
+
+              show(
+                "job-reject-age"
+              );
+
+            }else{
+
+              show(
+                "job-vacancies"
+              );
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+
+  /* =========================
+     НАЗАД ИЗ ОТКАЗА
+  ========================= */
+
+  document
+    .getElementById(
+      "reject-citizenship-back"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        show(
+          "job-question-citizenship"
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "reject-age-back"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        show(
+          "job-question-age"
+        );
+
+      }
+    );
+
+
+  /* =========================
+     ДЕТАЛИ
+  ========================= */
+
+  document
+    .getElementById(
+      "detail-back"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        show(
+          "job-vacancies"
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "apply-button"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        show(
+          "job-messenger"
+        );
+
+      }
+    );
+
+
+  /* =========================
+     TELEGRAM / MAX
+     ПОКА ТЕСТ
+  ========================= */
+
+  document
+    .getElementById(
+      "telegram-button"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        show(
+          "job-success"
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "max-button"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        show(
+          "job-success"
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "back-to-vacancies"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        show(
+          "job-vacancies"
+        );
+
+      }
+    );
+
+
+  /* =========================
+     ЗАПУСК
+  ========================= */
+
+  renderVacancies();
+
+
+  setTimeout(
+    function(){
+
+      show(
+        "job-welcome"
+      );
+
+    },
+    1800
+  );
+
+
+})();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js", {scope:"./"}).catch(console.error);
   });
+}
+</script>
+
+<script>
+(function(){
+  window.showInstallSuccessScreen = function(){
+    var app = document.getElementById('job-app');
+    var success = document.getElementById('install-success');
+    if(!success) return;
+    if(app) app.style.display = 'none';
+    success.style.display = 'flex';
+  };
+
+  if (localStorage.getItem('moya_podrabotka_install_success') === '1') {
+    localStorage.removeItem('moya_podrabotka_install_success');
+    window.showInstallSuccessScreen();
+  }
 })();
 </script>
 
