@@ -2235,8 +2235,14 @@ html,body{margin:0;padding:0;background:#f7f7fb;}
 
   /* =========================
      TELEGRAM / MAX
-     ПОКА ТЕСТ
   ========================= */
+
+  const TELEGRAM_LINK =
+    "https://t.me/sichkovaa7";
+
+  const MAX_LINK =
+    "https://max.ru/u/f9LHodD0cOI847DAOfnd-GJmHTEWXZtd-bkssaccAsZUtwvv4jcnLIrRmWs";
+
 
   document
     .getElementById(
@@ -2246,9 +2252,7 @@ html,body{margin:0;padding:0;background:#f7f7fb;}
       "click",
       function(){
 
-        show(
-          "job-success"
-        );
+        window.location.href = TELEGRAM_LINK;
 
       }
     );
@@ -2262,9 +2266,7 @@ html,body{margin:0;padding:0;background:#f7f7fb;}
       "click",
       function(){
 
-        show(
-          "job-success"
-        );
+        window.location.href = MAX_LINK;
 
       }
     );
